@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="Author" content="Ringroad">
+		<meta name="theme-color" content="#9831e0">
+		<meta name="msapplication-navbutton-color" content="#9831e0">
+		<meta name="apple-mobile-web-app-status-bar-style" content="#9831e0">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link rel="icon" href="img/favicon.png">
+		<title></title>
+		<link rel="stylesheet" href="css/fontawesome.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/custom.js"></script>
+		<meta charset="UTF-8" />
+  <title>SKF Shopping For Future</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      padding: 20px;
+      background: #f7f7f7;
+    }
+
+    .cart-icon {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      font-size: 30px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .cart-icon.shake {
+      animation: shake 0.4s;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-3px); }
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background-color: red;
+      color: white;
+      border-radius: 50%;
+      padding: 3px 6px;
+      font-size: 12px;
+      font-weight: bold;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background: #f44336;
+      color: white;
+    }
+
+   
+  #cartFormBox {
+    position: fixed;
+    top: 80px;               /* Jarak dari atas */
+    right: 20px;             /* Jarak dari kanan */
+    width: 90%;
+    max-width: 400px;        /* Maksimum lebar */
+    height: 50vh;            /* Hanya setengah tinggi layar */
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    z-index: 9999;
+    overflow-y: auto;        /* Biar bisa scroll di dalam box */
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .checkout-box input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+
+  .checkout-box table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+  }
+
+  .checkout-box th,
+  .checkout-box td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+  }
+
+  .total-row {
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: right;
+  }
+
+  .checkout-btn {
+    width: 100%;
+    padding: 10px;
+    background: #25D366;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .checkout-btn:hover {
+    background: #1DA851;
+  }
+</style>
+
+	
+	
+	<style>
+  #btnTop {
+    display: none;             /* Sembunyi dulu */
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 100;
+    font-size: 18px;
+    background-color: #25D366;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  #btnTop:hover {
+    background-color: #1DA851;
+  }
+</style>
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+  </style>
+</head>
+<body>
+
+<!-- Produk Dummy -->
+  <h2>SKF Shopping</h2>
+  <button onclick="addToCart('Kopi Premium', 30000)"></button>
+  <button onclick="addToCart('Teh Wangi', 15000)"></button>
+
+<audio id="cartSound" src="1.mp3" preload="auto"></audio>
+
+<button onclick="scrollToTop()" id="btnTop" title="Kembali ke Atas">⬆️</button>
+
+<div class="app-container">
+<div class="page page-home page-with-subnavbar">
+<div class="toolbar tabbar tabbar-labels toolbar-bottom">
+ <div class="toolbar-inner">
+  <a href="javascript:void(0);" class="tab-link" onclick="scrollToTop()">
+   <i class="fa fa-home"></i>
+   <p>Home</p>
+  </a>
+  <a href="#" class="tab-link">
+    <i class="fa fa-list-alt"></i>
+    <p>Fitur</p>
+  </a>
+  <a href="#" class="tab-link">
+    <i class="fa fa-list"></i>
+    <p>paket</p>
+  </a>
+    <a href="#" class="tab-link">
+     <i class="fa fa-shield"></i>
+     <p>Aktivasi</p>
+    </a>
+  <a href="#" class="tab-link">
+    <i class="fa fa-user"></i>
+    <p>About</p>
+  </a>
+  </a>
+ </div>
+</div>
+  <!-- Ikon Keranjang -->
+  <div class="cart-icon" id="cartIcon" onclick="toggleCartForm()">
+    🛒
+    <span class="cart-badge" id="cartCount">0</span>
+  </div>
+
+  <!-- Produk Dummy -->
+  
+
+ <!-- Tombol untuk menampilkan popup -->
+<button onclick="toggleCartForm()"></button>
+
+<!-- Popup Keranjang -->
+<div id="cartFormBox" class="hidden">
+  <div class="checkout-box">
+    <div class="form-section">
+      <input type="text" id="nama" placeholder="Nama" required>
+      <input type="text" id="alamat" placeholder="Alamat" required>
+      <input type="text" id="nohp" placeholder="No HP" required>
+      <input type="text" id="nomeja" placeholder="No Meja atau Rumah" required>
+    </div>
+
+    <table id="cartTable">
+      <thead>
+        <tr>
+          <th>Produk</th>
+          <th>Qty</th>
+          <th>Harga</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Produk akan ditambahkan di sini -->
+      </tbody>
+    </table>
+
+    <div class="total-row">
+      Total: Rp <span id="cartTotal">0</span>
+    </div>
+    <button class="checkout-btn" onclick="checkoutTelegram()">Checkout</button>
+  </div>
+</div>
+
+<body>
+<div class="app-container">
+<div class="page page-home page-with-subnavbar">
+<div class="toolbar tabbar tabbar-labels toolbar-bottom">
+ <div class="toolbar-inner">
+  <a href="/" class="tab-link tab-link-active">
+   <i class="fa fa-home"></i>
+   <p>Home</p>
+  </a>
+  <a href="fitur.html" class="tab-link">
+    <i class="fa fa-list-alt"></i>
+    <p>Fitur</p>
+  </a>
+  <a href="paket.html" class="tab-link">
+    <i class="fa fa-list"></i>
+    <p>paket</p>
+  </a>
+    <a href="aktivasi.html" class="tab-link">
+     <i class="fa fa-shield"></i>
+     <p>Aktivasi</p>
+    </a>
+  <a href="about.html" class="tab-link">
+    <i class="fa fa-user"></i>
+    <p>About</p>
+  </a>
+  </a>
+ </div>
+</div>
+ </div>
+<div class="promo-banner">
+  <video src="images/bannerutama.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+  <div class="header">
+    
+  </div>
+  
+  
+  
+  <div class="container">
+ <div class="section">
+    <div class="section-title">Best Seller</div>
+	  <div class="video-grid">
+    <div class="live-videos">
+  <div class="row">
+   <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 1000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp10.000</span></button>
+     </div>
+    
+   </div>
+    <div class="card">
+           <video src="images/2.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Teh Wangi', 5000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+    
+   </div>
+    <div class="card">
+           <video src="images/3.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Celup', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+   </div>
+   
+     <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+    
+   </div>
+    <div class="card">
+           <video src="images/2.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+    
+   </div>
+    <div class="card">
+           <video src="images/3.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+   </div>
+     </div>
+   </div>
+  </div>
+ </div>
+ </div>
+ </div>
+  
+  <br>
+ <div class="promo-banner">
+  <video src="images/banner1.mp4"autoplay muted loop playsinline style="width: 100%; height: auto;</video>
+  <div class="header">
+    
+  </div>
+  
+  
+  
+  
+  
+  
+  <div class="container">
+ <div class="section">
+    <div class="section-title">Best Seller</div>
+	  <div class="video-grid">
+    <div class="live-videos">
+  <div class="row">
+   <div class="card">
+           <video src="images/2.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+    
+   </div>
+    <div class="card">
+           <video src="images/2.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+    
+   </div>
+    <div class="card">
+           <video src="images/2.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+   </div>
+   
+     <div class="card">
+           <video src="images/2.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+     </div>
+	 
+	 
+	 
+	  <div class="card">
+           <video src="images/2.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>   
+   </div>
+   
+   
+     <div class="card">
+           <video src="images/2.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>   
+   </div>
+     </div>
+   </div>
+  </div>
+ </div>
+ </div>
+ </div>
+  
+  <br>
+ <div class="promo-banner">
+  <video src="images/banner1.mp4"autoplay muted loop playsinline style="width: 100%; height: auto;</video>
+  <div class="header">
+    
+  </div>
+  
+  
+  
+  
+  
+  
+  <div class="container">
+ <div class="section">
+    <div class="section-title">Best Seller</div>
+	  <div class="video-grid">
+    <div class="live-videos">
+  <div class="row">
+   <div class="card">
+           <video src="images/3.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+    
+   </div>
+    <div class="card">
+           <video src="images/3.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+    
+   </div>
+    <div class="card">
+           <video src="images/3.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+   </div>
+   
+     <div class="card">
+           <video src="images/3.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+     </div>
+	 
+	 
+	 
+	  <div class="card">
+           <video src="images/3.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>   
+   </div>
+   
+   
+     <div class="card">
+           <video src="images/3.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>   
+   </div>
+     </div>
+   </div>
+  </div>
+ </div>
+ </div>
+ </div>
+  
+  <br>
+ <div class="promo-banner">
+  <video src="images/banner1.mp4"autoplay muted loop playsinline style="width: 100%; height: auto;</video>
+  <div class="header">
+    
+  </div>
+  
+  
+  
+  
+  <div class="container">
+ <div class="section">
+    <div class="section-title">Best Seller</div>
+	  <div class="video-grid">
+    <div class="live-videos">
+  <div class="row">
+   <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+    
+   </div>
+    <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+    
+   </div>
+    <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+   </div>
+   
+     <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+     </div>
+	 
+	 
+	 
+	  <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>   
+   </div>
+   
+   
+     <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>   
+   </div>
+     </div>
+   </div>
+  </div>
+ </div>
+ </div>
+ </div>
+  
+  <br>
+ <div class="promo-banner">
+  <video src="images/banner1.mp4"autoplay muted loop playsinline style="width: 100%; height: auto;</video>
+  <div class="header">
+    
+  </div>
+  
+  
+  
+  
+  
+  <div class="container">
+ <div class="section">
+    <div class="section-title">Best Seller</div>
+	  <div class="video-grid">
+    <div class="live-videos">
+  <div class="row">
+   <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+    
+   </div>
+    <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+    
+   </div>
+    <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+   </div>
+   
+     <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+     </div>
+	 
+	 
+	 
+	  <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>   
+   </div>
+   
+   
+     <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>   
+   </div>
+     </div>
+   </div>
+  </div>
+ </div>
+ </div>
+ </div>
+  
+  <br>
+ <div class="promo-banner">
+  <video src="images/banner1.mp4"autoplay muted loop playsinline style="width: 100%; height: auto;</video>
+  <div class="header">
+    
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <div class="container">
+ <div class="section">
+    <div class="section-title">Best Seller</div>
+	  <div class="video-grid">
+    <div class="live-videos">
+  <div class="row">
+   <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+    
+   </div>
+    <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+    
+   </div>
+    <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+   </div>
+   
+     <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+     </div>
+	 
+	 
+	 
+	  <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>   
+   </div>
+   
+   
+     <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>   
+   </div>
+     </div>
+   </div>
+  </div>
+ </div>
+ </div>
+ </div>
+  
+  <br>
+ <div class="promo-banner">
+  <video src="images/banner1.mp4"autoplay muted loop playsinline style="width: 100%; height: auto;</video>
+  <div class="header">
+    
+  </div>
+  
+  
+  
+  <div class="container">
+ <div class="section">
+    <div class="section-title">Best Seller</div>
+	  <div class="video-grid">
+    <div class="live-videos">
+  <div class="row">
+   <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+    
+   </div>
+    <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+    
+   </div>
+    <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+   </div>
+   
+     <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>
+     </div>
+	 
+	 
+	 
+	  <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>   
+   </div>
+   
+   
+     <div class="card">
+           <video src="images/1.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+         <button onclick="addToCart('Kopi Premium', 30000)">🛒</button>
+    
+		  <div class="harga">
+      <span class="normal">Rp35.000</span>
+      <span class="diskon">Rp30.000</span></button>
+     </div>   
+   </div>
+     </div>
+   </div>
+  </div>
+ </div>
+ </div>
+ </div>
+  
+  <br>
+ <div class="promo-banner">
+  <video src="images/team.mp4"autoplay muted loop playsinline style="width: 100%; height: auto;</video>
+  <div class="header">
+    
+  </div>
+  
+  <br>
+  <br>
+  <br>
+  
+  
+  
+  
+  <script>
+    let cart = {};
+
+    function addToCart(nama, harga) {
+      if (cart[nama]) {
+        cart[nama].qty += 1;
+      } else {
+        cart[nama] = { harga: harga, qty: 1 };
+      }
+
+      // Efek shake
+      const icon = document.getElementById('cartIcon');
+      icon.classList.add('shake');
+      setTimeout(() => icon.classList.remove('shake'), 400);
+
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const tbody = document.querySelector("#cartTable tbody");
+      tbody.innerHTML = '';
+
+      let total = 0;
+      let count = 0;
+
+      for (const nama in cart) {
+        const item = cart[nama];
+        total += item.harga * item.qty;
+        count += item.qty;
+
+        const row = `<tr>
+          <td>${nama}</td>
+          <td>${item.qty}</td>
+          <td>Rp ${item.harga.toLocaleString()}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+      }
+
+      document.getElementById('cartTotal').textContent = total.toLocaleString();
+      document.getElementById('cartCount').textContent = count;
+    }
+
+    function toggleCartForm() {
+      const form = document.getElementById('cartFormBox');
+      form.classList.toggle('hidden');
+    }
+
+    function checkoutTelegram() {
+      const nama = document.getElementById('nama').value;
+      const alamat = document.getElementById('alamat').value;
+      const nohp = document.getElementById('nohp').value;
+      const nomeja = document.getElementById('nomeja').value;
+
+      if (!nama || !alamat || !nohp || !nomeja) {
+        alert('Mohon lengkapi semua data!');
+        return;
+      }
+
+      let pesan = `🛒 PESANAN BARU\n`;
+      pesan += `Nama: ${nama}\nAlamat: ${alamat}\nNo HP: ${nohp}\nNo Meja/Rumah: ${nomeja}\n\n`;
+      pesan += `Detail Pesanan:\n`;
+
+      let total = 0;
+      for (const namaProduk in cart) {
+        const item = cart[namaProduk];
+        pesan += `- ${namaProduk} x${item.qty} @Rp${item.harga.toLocaleString()}\n`;
+        total += item.harga * item.qty;
+      }
+      pesan += `\nTotal: Rp${total.toLocaleString()}`;
+
+      // Ganti token dan chat_id dengan milik kamu
+      const token = 'YOUR_BOT_TOKEN';
+      const chat_id = 'YOUR_CHAT_ID';
+      const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(pesan)}`;
+
+      fetch(url)
+        .then(res => {
+          if (res.ok) {
+            alert('Pesanan berhasil dikirim ke Telegram!');
+            cart = {};
+            updateCartUI();
+            toggleCartForm();
+          } else {
+            alert('Gagal mengirim ke Telegram');
+          }
+        })
+        .catch(() => alert('Gagal terhubung ke Telegram'));
+    }
+  </script>
+  
+  
+  
+  <script>
+  function toggleCartForm() {
+    const cartBox = document.getElementById("cartFormBox");
+    cartBox.classList.toggle("hidden");
+  }
+</script>
+<script>
+  // Tampilkan tombol saat scroll ke bawah
+  window.onscroll = function () {
+    const btn = document.getElementById("btnTop");
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+      btn.style.display = "block";
+    } else {
+      btn.style.display = "none";
+    }
+  };
+
+  // Scroll ke atas saat diklik
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
