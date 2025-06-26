@@ -156,6 +156,26 @@
   .checkout-btn:hover {
     background: #1DA851;
   }
+  
+  .harga {
+  font-size: 10px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.normal {
+  text-decoration: line-through;
+  color: #999;
+  margin-center:10px;
+}
+
+.diskon {
+  color: #e53935;
+  font-weight: bold;
+}
+  
+  
+  
 </style>
 
 	
@@ -183,28 +203,88 @@
   }
 </style>
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	 <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+   .header {
+    position: sticky;
+    top: 0;
+    background-color: #f6f6f6;
+    padding: 0px 0;
+    text-align: -webkit-left;
+    z-index: 999;
+    box-shadow: 3px 11px 0px 25px #e93b3b;
+}
+    .header h2 {
+      margin: 5px 0;
+      color: white;
+    }
+
+    .search-bar {
+      max-width:;
+      margin: 10px auto;
+    }
+
+    .search-bar input[type="text"] {
+      width: 100%;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .product-buttons {
+      padding: 1px;
+      text-align: center;
+    }
+
+    .product-buttons button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
   </style>
+
+
+
+<style>	
+	
+	
+</style>	
+	
+	
+	
+	
+	
 </head>
 <body>
-
+  
 <!-- Produk Dummy -->
-  <h2>SKF Shopping</h2>
-  <button onclick="addToCart('Kopi Premium', 30000)"></button>
-  <button onclick="addToCart('Teh Wangi', 15000)"></button>
-
+<div clas="cart-icon"
+   <div class="header">
+     
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Cari produk...">
+	  
+    </div>
+  </div>
+ 
+<div class="cart-icon" id="cartIcon" onclick="toggleCartForm()">
+    🛒
+    <span class="cart-badge" id="cartCount">0</span>
+  </div>
+  <div class="product-buttons">
+    
+    <!-- Tambah produk lainnya di sini -->
+  </div>
+  </div>
 <audio id="cartSound" src="1.mp3" preload="auto"></audio>
 
-<button onclick="scrollToTop()" id="btnTop" title="Kembali ke Atas">⬆️</button>
+
 
 <div class="app-container">
 <div class="page page-home page-with-subnavbar">
@@ -222,7 +302,7 @@
     <i class="fa fa-list"></i>
     <p>paket</p>
   </a>
-    <a href="#" class="tab-link">
+    <a href="#" class="powered">
      <i class="fa fa-shield"></i>
      <p>Aktivasi</p>
     </a>
@@ -235,7 +315,7 @@
 </div>
   <!-- Ikon Keranjang -->
   <div class="cart-icon" id="cartIcon" onclick="toggleCartForm()">
-    🛒
+    
     <span class="cart-badge" id="cartCount">0</span>
   </div>
 
@@ -292,11 +372,11 @@
     <i class="fa fa-list"></i>
     <p>paket</p>
   </a>
-    <a href="aktivasi.html" class="tab-link">
+    <a href="https://wa.me/628924362221?text=Hallo%2terimakasih%20telah%20menghubungi%20Call%20Centre%20SKFshopping%20saya%20Filah%20siap%20%20membantu%20anda."  class="tab-link">
      <i class="fa fa-shield"></i>
      <p>Aktivasi</p>
     </a>
-  <a href="about.html" class="tab-link">
+  <a href="#promo" class="btn">
     <i class="fa fa-user"></i>
     <p>About</p>
   </a>
@@ -304,14 +384,12 @@
  </div>
 </div>
  </div>
-<div class="promo-banner">
-  <video src="images/bannerutama.mp4" autoplay muted loop playsinline style="width: 100%; height: auto;"></video>
+
+  
+   <div class="promo-bannee">
+  <video src="images/bannerutama.mp4"autoplay muted loop playsinline style="width: 100%; height: auto;</video>
   <div class="header">
-    
-  </div>
-  
-  
-  
+   
   <div class="container">
  <div class="section">
     <div class="section-title">Best Seller</div>
@@ -863,8 +941,9 @@
  </div>
   
   <br>
- <div class="promo-banner">
-  <video src="images/team.mp4"autoplay muted loop playsinline style="width: 100%; height: auto;</video>
+   
+ <div class="promo-banner" id="promo">
+  <video src="images/Powered By.mp4"autoplay muted loop playsinline style="width: 100%; height: auto;</video>
   <div class="header">
     
   </div>
@@ -947,8 +1026,8 @@
       pesan += `\nTotal: Rp${total.toLocaleString()}`;
 
       // Ganti token dan chat_id dengan milik kamu
-      const token = 'YOUR_BOT_TOKEN';
-      const chat_id = 'YOUR_CHAT_ID';
+      const token = '7226033744:AAHg1MgCyzBwzVL-0YlAbhWO6_Hjr7Bhsyg';
+      const chat_id = '7818577902';
       const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(pesan)}`;
 
       fetch(url)
@@ -989,6 +1068,10 @@
   function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+  
+  
+  
+  
 </script>
 
 </body>
