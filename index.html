@@ -1031,12 +1031,12 @@
       fetch(url)
         .then(res => {
           if (res.ok) {
-            alert('Pesanan berhasil dikirim ke Telegram!');
+            alert('Pesanan berhasil di kirim silahkan di tunggu!');
             cart = {};
             updateCartUI();
             toggleCartForm();
           } else {
-            alert('Gagal mengirim ke Telegram');
+            alert('Pesanan Gagal Terkirim, Periksa koneksi Anda ');
           }
         })
         .catch(() => alert('Gagal terhubung ke Telegram'));
